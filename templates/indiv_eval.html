@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Индивидуальная оценка</h2>
+<form method="post" action="{{ url_for('indiv_eval.save') }}" class="form-grid">
+
+  <!-- Блок работ -->
+  <div class="form-row">
+    <label>Блок работ</label>
+    <select name="block_id" id="block_id" class="select2" required>
+      <option value="" selected>Все блоки</option>
+      {% for b in blocks %}
+        <option value="{{ b.id }}">{{ b.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Команда -->
+  <div class="form-row">
+    <label>Команда</label>
+    <select name="team_id" id="team_id" class="select2">
+      <option value="" selected>Все команды</option>
+      {% for t in teams %}
+        <option value="{{ t.id }}">{{ t.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Кейс -->
+  <div class="form-row">
+    <label>Кейс</label>
+    <select name="case_id" id="case_id" class="select2">
+      <option value="" selected>Все кейсы</option>
+      {% for c in cases %}
+        <option value="{{ c.id }}" data-team="{{ c.team_id }}">{{ c.title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- ФИО -->
+  <div class="form-row">
+    <label>ФИО</label>
+    <select name="participant_id" id="participant_id" class="select2">
+      <option value="" selected>Все участники</option>
+      {% for p in participants %}
+        <option value="{{ p.id }}" data-team="{{ p.team_id }}">{{ p.full_name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Оценка -->
+  <div class="form-row">
+    <label>Оценка</label>
+    <input type="number" name="score" min="0" max="100" step="0.01" required>
+  </div>
+
+  <!-- Комментарии -->
+  <div class="form-row">
+    <label>Комментарии</label>
+    <textarea name="comment" rows="3" placeholder="Трекер, эксперт..."></textarea>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit">Сохранить</button>
+  </div>
+</form>
+
+<script>
+$(function() {
+  // // Сохраняем все опции участников
+  // const allParticipants = $("#participant_id option").clone();
+
+  // function updateParticipants(teamId) {
+  //   // Очищаем текущие опции
+  //   $("#participant_id").empty();
+
+  //   // Добавляем только участников выбранной команды
+  //   allParticipants.each(function() {
+  //     if ($(this).data('team') == teamId) {
+  //       $("#participant_id").append($(this).clone());
+  //     }
+  //   });
+
+  //   // Сброс выбранного участника
+  //   $("#participant_id").val(null).trigger('change.select2');
+  // }
+
+  $(".select2").select2({ width: '100%', placeholder: 'Выберите...', allowClear: true });
+
+  // // При выборе команды
+  // $("#team_id").on("change", function() {
+  //   let teamId = $(this).val();
+
+  //   if (!teamId) {
+  //     $("#case_id").val(null).trigger('change.select2');
+  //     $("#participant_id").empty().trigger('change.select2');
+  //     return;
+  //   }
+
+  //   // Подставляем кейс этой команды
+  //   let caseOption = $("#case_id option").filter(function() {
+  //     return $(this).data('team') == teamId;
+  //   }).first();
+  //   if (caseOption.length) {
+  //     $("#case_id").val(caseOption.val()).trigger('change.select2');
+  //   }
+
+  //   // Фильтруем участников
+  //   updateParticipants(teamId);
+  // });
+
+  // // При выборе кейса
+  // $("#case_id").on("change", function() {
+  //   let teamId = $(this).find('option:selected').data('team');
+  //   if (teamId) {
+  //     $("#team_id").val(teamId).trigger('change.select2');
+  //     updateParticipants(teamId);
+  //   }
+  // });
+});
+</script>
+
+
+
+{% endblock %}

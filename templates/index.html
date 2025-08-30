@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="cards-vertical">
+    <a class="card big" href="{{ url_for('team_eval.form') }}">
+      <div class="card-title">Командная оценка</div>
+      <div class="card-desc">Блок, кейс, команда, очки</div>
+    </a>
+    <a class="card big" href="{{ url_for('indiv_eval.form') }}">
+      <div class="card-title">Индивидуальная оценка</div>
+      <div class="card-desc">Блок, кейс, команда, ФИО, оценка, комментарии</div>
+    </a>
+  </section>
+{% endblock %}
+

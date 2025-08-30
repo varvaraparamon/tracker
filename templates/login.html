@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход — Трекер</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}">
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <h1>Вход</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for cat, msg in messages %}
+            <div class="flash-item {{ cat }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <form method="post">
+      <label>Логин</label>
+      <input type="text" name="login" placeholder="login" required autofocus>
+      <label>Пароль</label>
+      <input type="password" name="password" placeholder="••••••••" required>
+      <button type="submit">Войти</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+:root {
+  --bg: #0c0c0d;
+  --surface: #121214;
+  --muted: #1b1b1f;
+  --text: #e6e6e6;
+  --text-dim: #b0b0b0;
+  --accent: #2f81f7;
+  --success: #1db954;
+  --error: #ff4d4f;
+  --radius: 14px;
+  --shadow: 0 6px 24px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+html, body { 
+  margin:0; 
+  padding:0; 
+  background: var(--bg); 
+  color: var(--text); 
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+  font-size: 18px; /* 🔥 увеличенный базовый размер */
+  line-height: 1.6;
+}
+
+.topbar {
+  position: sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px; background: rgba(18,18,20,.85); backdrop-filter: blur(6px);
+  border-bottom: 1px solid #222;
+}
+.topbar .brand { font-weight:700; letter-spacing:.3px; }
+.topbar nav a { color: var(--text-dim); margin-left:16px; text-decoration:none; }
+.topbar nav a:hover { color: var(--text); }
+
+.container { max-width: 980px; margin: 28px auto; padding: 0 16px; }
+
+.cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
+.card {
+  display:block; background: var(--surface); border-radius: var(--radius);
+  padding:18px; text-decoration:none; color:var(--text);
+  box-shadow: var(--shadow); border:1px solid #222;
+  transition: transform .12s ease, background .2s ease, border-color .2s;
+}
+.card:hover { transform: translateY(-2px); background:#151518; border-color:#2a2a2a; }
+.card-title { font-size: 1.1rem; font-weight:700; margin-bottom:6px; }
+.card-desc { color: var(--text-dim); font-size:.95rem; }
+
+.form-grid { display:grid; gap:20px; background: var(--surface); padding:20px; border-radius: var(--radius); border:1px solid #222; box-shadow: var(--shadow); }
+.form-row { display:flex; flex-direction:column; gap:8px; }
+label { color: var(--text-dim); font-size:.95rem; }
+input, textarea, select { background: var(--muted); color: var(--text); border:1px solid #2a2a2a; border-radius: 10px; padding:10px 12px; outline:none; }
+textarea { resize: vertical; }
+input:focus, textarea:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.15); }
+
+.form-actions { display:flex; justify-content:flex-end; }
+button {
+  background: var(--accent); color:white; border:none; padding:10px 16px; border-radius: 12px;
+  cursor:pointer; font-weight:600; box-shadow: var(--shadow);
+}
+button:hover { filter: brightness(1.05); }
+
+.flash { display:grid; gap:8px; margin-bottom:12px; }
+.flash-item { padding:10px 12px; border-radius: 10px; border:1px solid #2a2a2a; }
+.flash-item.success { background: rgba(29,185,84,.12); border-color: rgba(29,185,84,.35); }
+.flash-item.error { background: rgba(255,77,79,.12); border-color: rgba(255,77,79,.35); }
+
+.select2-container--default .select2-selection--single {
+  background-color: var(--muted);
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  height: 42px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--text); line-height: 42px; padding-left: 12px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 42px;
+}
+
+.footer { text-align:center; color: var(--text-dim); padding: 24px 0 40px; }
+.login-body { display:grid; place-items:center; min-height: 100vh; background: radial-gradient(1200px 800px at 50% -10%, rgba(47,129,247,.15), transparent), var(--bg); }
+.login-card { width: 100%; max-width: 360px; background: var(--surface); border:1px solid #222; border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.login-card h1 { margin: 0 0 12px; }
+.login-card form { display:grid; gap:10px; }
+.login-card input { width: 100%; }
+
+.select2-container--default .select2-dropdown {
+  background-color: var(--surface);
+  border: 1px solid #2a2a2a;
+  color: var(--text);
+}
+
+/* каждая опция */
+.select2-container--default .select2-results__option {
+  color: var(--text);
+  background-color: var(--surface);
+  padding: 8px 12px;
+}
+
+/* при наведении */
+.select2-container--default .select2-results__option--highlighted {
+  background-color: var(--accent);
+  color: white;
+}
+
+
+.cards-vertical { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 22px; 
+  align-items: stretch; 
+}
+.card.big {
+  padding: 32px; 
+  text-align: center;
+  font-size: 1.2rem;
+}
+.card.big .card-title { font-size: 1.6rem; margin-bottom: 12px; }
+.card.big .card-desc { font-size: 1rem; }
+
+/* Дропдауны — контрастный фон */
+.select2-container--default .select2-selection--single {
+  background-color: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  height: 46px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--text); 
+  line-height: 46px; 
+  padding-left: 12px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 46px;
+}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Командная оценка</h2>
+<form method="post" action="{{ url_for('team_eval.save') }}" class="form-grid">
+  <!-- Блок работ -->
+  <div class="form-row">
+    <label>Блок работ</label>
+    <select name="block_id" id="block_id" class="select2" required>
+      <option value="" selected>Все блоки</option>
+      {% for b in blocks %}
+        <option value="{{ b.id }}">{{ b.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Команда -->
+  <div class="form-row">
+    <label>Команда</label>
+    <select name="team_id" id="team_id" class="select2">
+      <option value="" selected>Все команды</option>
+      {% for t in teams %}
+        <option value="{{ t.id }}">{{ t.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Кейс -->
+  <div class="form-row">
+    <label>Кейс</label>
+    <select name="case_id" id="case_id" class="select2">
+      <option value="" selected>Все кейсы</option>
+      {% for c in cases %}
+        <option value="{{ c.id }}" data-team="{{ c.team_id }}">{{ c.title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Очки -->
+  <div class="form-row">
+    <label>Очки команде</label>
+    <input type="number" name="points" min="0" max="100" step="0.01" required>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit">Сохранить</button>
+  </div>
+</form>
+
+<script>
+$(function() {
+  $(".select2").select2({ width: '100%', placeholder: 'Выберите...', allowClear: true });
+
+  // // Если выбрали кейс, автоматически подставляем команду
+  // $("#case_id").on("change", function(){
+  //   let selected = $(this).find('option:selected');
+  //   let teamId = selected.data('team');
+  //   if (teamId) {
+  //     $("#team_id").val(teamId).trigger('change.select2');
+  //   }
+  // });
+
+  // // Если выбрали команду, фильтруем кейсы, но выбор «Все кейсы» возможен
+  // $("#team_id").on("change", function(){
+  //   let teamId = $(this).val();
+  //   $("#case_id option").each(function(){
+  //     let optionTeam = $(this).data('team');
+  //     if (!teamId || optionTeam == teamId || $(this).val() === "") {
+  //       $(this).show();
+  //     } else {
+  //       $(this).hide();
+  //     }
+  //   });
+  //   $("#case_id").trigger('change.select2');
+  // });
+});
+</script>
+{% endblock %}
