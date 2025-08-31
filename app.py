@@ -20,11 +20,13 @@ def create_app():
     from routes.auth import auth_bp
     from routes.team_eval import team_eval_bp
     from routes.indiv_eval import indiv_eval_bp
+    from routes.transcribe import transcribe_bp
     from routes.api import api_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(team_eval_bp, url_prefix="/team")
     app.register_blueprint(indiv_eval_bp, url_prefix="/individual")
+    app.register_blueprint(transcribe_bp, url_prefix="/transcribator")
     app.register_blueprint(api_bp, url_prefix="/api")
 
     @app.route("/")

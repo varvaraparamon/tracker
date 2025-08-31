@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Обработка файла</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div class="center-container">
+        <h2>⏳ Ваш файл в обработке</h2>
+        <p id="queue-status">Определение позиции...</p>
+        <div class="loader"></div>
+    </div>
+
+    <script>
+        const taskId = "{{ task_id }}";
+        let polling = true;
+
+        async function pollStatus() {
+            if (!polling) return;
+
+            const res = await fetch(`/transcribator/queue_status/${taskId}`);
+            const data = await res.json();
+
+            if (data.status === "queued") {
+                document.getElementById("queue-status").textContent =
+                    `Вы в очереди: ${data.position}`;
+            } else if (data.status === "processing") {
+                document.getElementById("queue-status").textContent = "🔧 Обработка...";
+            } else if (data.status === "done") {
+                polling = false;
+
+                const downloadUrl = `/transcribator/download/${data.transcript_id}`;
+                const viewUrl = `/transcribator/view/${data.transcript_id}`;
+
+                if (data.download) {
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = '';
+                    a.click();
+
+                    // после скачивания → переход на просмотр
+                    setTimeout(() => {
+                        window.location.href = viewUrl;
+                    }, 1000);
+                } else {
+                    window.location.href = viewUrl;
+                }
+            } else if (data.status === "error") {
+                polling = false;
+                document.getElementById("queue-status").textContent = "Ошибка: " + data.message;
+            }
+        }
+
+        setInterval(pollStatus, 3000);
+        pollStatus();
+    </script>
+
+</body>
+
+</html>
