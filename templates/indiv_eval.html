@@ -14,6 +14,20 @@
     </select>
   </div>
 
+  <div class="form-row">
+  <label>ФИО</label>
+  <select name="participant_id" id="participant_id" class="select2">
+    <option value="" selected>Все участники</option>
+    {% for p in participants %}
+      <option value="{{ p.id }}" 
+              data-team="{{ p.team_id }}" 
+              data-case="{{ p.team.case_id if p.team and p.team.case_id else '' }}">
+        {{ p.full_name }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
   <!-- Команда -->
   <div class="form-row">
     <label>Команда</label>
@@ -36,7 +50,7 @@
     </select>
   </div>
 
-  <!-- ФИО -->
+  <!-- ФИО
   <div class="form-row">
     <label>ФИО</label>
     <select name="participant_id" id="participant_id" class="select2">
@@ -45,7 +59,7 @@
         <option value="{{ p.id }}" data-team="{{ p.team_id }}">{{ p.full_name }}</option>
       {% endfor %}
     </select>
-  </div>
+  </div> -->
 
   <!-- Оценка -->
   <div class="form-row">
@@ -66,56 +80,21 @@
 
 <script>
 $(function() {
-  // // Сохраняем все опции участников
-  // const allParticipants = $("#participant_id option").clone();
-
-  // function updateParticipants(teamId) {
-  //   // Очищаем текущие опции
-  //   $("#participant_id").empty();
-
-  //   // Добавляем только участников выбранной команды
-  //   allParticipants.each(function() {
-  //     if ($(this).data('team') == teamId) {
-  //       $("#participant_id").append($(this).clone());
-  //     }
-  //   });
-
-  //   // Сброс выбранного участника
-  //   $("#participant_id").val(null).trigger('change.select2');
-  // }
-
   $(".select2").select2({ width: '100%', placeholder: 'Выберите...', allowClear: true });
 
-  // // При выборе команды
-  // $("#team_id").on("change", function() {
-  //   let teamId = $(this).val();
+  // Участник → команда + кейс
+  $("#participant_id").on("change", function() {
+    let selected = $(this).find("option:selected");
+    let teamId = selected.data("team");
+    let caseId = selected.data("case");
 
-  //   if (!teamId) {
-  //     $("#case_id").val(null).trigger('change.select2');
-  //     $("#participant_id").empty().trigger('change.select2');
-  //     return;
-  //   }
-
-  //   // Подставляем кейс этой команды
-  //   let caseOption = $("#case_id option").filter(function() {
-  //     return $(this).data('team') == teamId;
-  //   }).first();
-  //   if (caseOption.length) {
-  //     $("#case_id").val(caseOption.val()).trigger('change.select2');
-  //   }
-
-  //   // Фильтруем участников
-  //   updateParticipants(teamId);
-  // });
-
-  // // При выборе кейса
-  // $("#case_id").on("change", function() {
-  //   let teamId = $(this).find('option:selected').data('team');
-  //   if (teamId) {
-  //     $("#team_id").val(teamId).trigger('change.select2');
-  //     updateParticipants(teamId);
-  //   }
-  // });
+    if (teamId) {
+      $("#team_id").val(teamId).trigger("change.select2");
+    }
+    if (caseId) {
+      $("#case_id").val(caseId).trigger("change.select2");
+    }
+  });
 });
 </script>
 
